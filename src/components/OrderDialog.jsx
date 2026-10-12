@@ -35,7 +35,7 @@ export default function OrderDialog({ product, onClose, onChanged, onOrdered }) 
     <div className="backdrop" onClick={onClose}>
       <div className="card dialog" onClick={(e) => e.stopPropagation()}>
         <div className="dialog-head">
-          <WatchImage brand={product.brand} size={64} />
+          <WatchImage brand={product.brand} modelNumber={product.modelNumber} size={64} />
           <div>
             <h3>{product.brand} {product.name}</h3>
             <div className="muted">

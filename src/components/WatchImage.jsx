@@ -1,4 +1,8 @@
-// איור SVG של שעון במקום תמונה אמיתית. הצבע נקבע לפי המותג
+import { useState } from 'react';
+
+// תמונה אמיתית מ-public/watches/<מספר דגם>.jpg או .png, ואם אין - איור SVG בצבעי המותג
+const EXTENSIONS = ['jpg', 'png'];
+
 const BRAND_COLORS = {
   Rolex: ['#0b5d3b', '#c9a227'],
   Omega: ['#1d3557', '#c0c0c0'],
@@ -18,7 +22,27 @@ function colorsFor(brand) {
   return [`hsl(${hash} 45% 30%)`, `hsl(${(hash + 40) % 360} 60% 70%)`];
 }
 
-export default function WatchImage({ brand, size = 96 }) {
+export default function WatchImage({ brand, modelNumber, size = 96 }) {
+  // מנסים כל סיומת לפי הסדר; כשכולן נכשלו מציגים את האיור
+  const [attempt, setAttempt] = useState(0);
+
+  if (modelNumber && attempt < EXTENSIONS.length) {
+    return (
+      <img
+        src={`/watches/${modelNumber}.${EXTENSIONS[attempt]}`}
+        alt={`${brand} ${modelNumber}`}
+        width={size}
+        height={size}
+        style={{ objectFit: 'contain' }}
+        onError={() => setAttempt((a) => a + 1)}
+      />
+    );
+  }
+
+  return <WatchDrawing brand={brand} size={size} />;
+}
+
+function WatchDrawing({ brand, size }) {
   const [dial, accent] = colorsFor(brand);
 
   return (

@@ -65,7 +65,7 @@ export default function ProductsPage({ onOrdered }) {
           <div className="grid">
             {result.items.map((p) => (
               <div key={p.id} className={`product ${p.isActive ? '' : 'inactive'}`}>
-                <WatchImage brand={p.brand} />
+                <WatchImage brand={p.brand} modelNumber={p.modelNumber} />
                 <div className="brand">{p.brand}</div>
                 <h3>{p.name}</h3>
                 <div className="muted">{p.modelNumber} · {p.categoryName}</div>
